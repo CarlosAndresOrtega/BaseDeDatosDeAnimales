@@ -20,7 +20,7 @@ var description = "MIX";
 var context;
 var recorder;
 var div = document.querySelector("#Mostrar");
-var duration = 30000;
+var duration = 10000;
 var chunks = [];
 var audio = new AudioContext();
 var mixedAudio = audio.createMediaStreamDestination();
@@ -117,7 +117,7 @@ function iniciar(){
                     recorder = new MediaRecorder(mixedAudio.stream);
                     recorder.start(0);
                     mix.start(0);
-                    div.innerHTML = "playing and recording tracks..";
+                    div.innerHTML = "reproduciendo y grabando pistas..";
                     // stop playback and recorder in 60 seconds
                     stopMix(duration, mix, recorder)
     
@@ -136,16 +136,21 @@ function iniciar(){
             })
             .then(function (blob) {
                 console.log(blob);
-                div.innerHTML = "mixed audio tracks ready for download..";
+                div.innerHTML = "Audio mezclado listo para descargar..";
                 var audioDownload = URL.createObjectURL(blob);
                 var a = document.createElement("a");
+                a.style.position="relative";
+                a.style.left="50px";
+                document.getElementById("Descargar").style.position="relative";
+                document.getElementById("Descargar").style.backgroundColor="aliceblue";
+                document.getElementById("Descargar").style.zIndex="20";
                 a.download = description + "." + blob.type.replace(/.+\/|;.+/g, "");
                 a.href = audioDownload;
                 a.innerHTML = a.download;
-                document.body.appendChild(a);
+                document.getElementById("Descargar").appendChild(a);
                 a.insertAdjacentHTML("afterend", "<br>");
                 player.src = audioDownload;
-                document.body.appendChild(player);
+                document.getElementById("Descargar").appendChild(player);
             })
     })
         .catch(function (e) {
