@@ -117,6 +117,38 @@
 
         </details>
       </fieldset>
+      
+      <fieldset>
+        <legend>Busqueda por duracion de audio</legend>
+        <details>
+          <summary>Elija el tipo de busqueda por audio:</summary><br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poquesi" id="Mayor2" >
+            <label class="form-check-label" for="poquesi4">
+              Mayor  
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poquesi" id="Igual2" >
+            <label class="form-check-label" for="poquesi5">
+              Igual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poquesi" id="Menor2" checked>
+            <label class="form-check-label" for="poquesi6">
+              Menor
+            </label>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <label>Duracion del audio que quiere buscar
+                <input type="text" class="form-control" id="inputTamaño2" placeholder="20.34 s ">
+              </label>
+            </div>
+          </div>
+      </details>
+      </fieldset>
     
     </form>
     <button id="Btnget" type="submit" class="btn btn-success" onclick="downloadFile()">Obtener imagenes</button>    
