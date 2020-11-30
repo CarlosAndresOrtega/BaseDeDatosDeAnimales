@@ -29,16 +29,16 @@ function downloadFile() {
 
                 if (requisito(e.val(), busqueda) == true) {
                     resultados.push(e.val());
-                    
+
                     name = extraerNombre(e.val().URL);
                     document.getElementById("preview").innerHTML += (`<div id="${name}"></div>`);
-                    ObtenerImagen(extraerNombre(e.val().URL),name,extraerNombre(e.val().audio));
+                    ObtenerImagen(extraerNombre(e.val().URL), name, extraerNombre(e.val().audio));
 
                 }
             });
 
         });
-        
+
     } else {
         alert("No selecciono ningun tipo de busqueda");
     }
@@ -57,12 +57,12 @@ function obtenerPosicion(objeto) {
     return -1;
 
 }
-function ObtenerImagen(urlI,name,urlA) {
-    
+function ObtenerImagen(urlI, name, urlA) {
+
     firebase.storage().ref(`/imagenes/${urlI}`).getDownloadURL().then(resolve => {
 
         document.getElementById(`${name}`).innerHTML = ('<img src="' + resolve + '">');
-        ObtenerAudio(urlA,name);
+        ObtenerAudio(urlA, name);
 
     }).catch(error => {
         console.log(error);
@@ -70,7 +70,7 @@ function ObtenerImagen(urlI,name,urlA) {
     });
 
 }
-function ObtenerAudio(url,name) {
+function ObtenerAudio(url, name) {
 
     firebase.storage().ref(`/Audios/${url}`).getDownloadURL().then(resolve => {
         document.getElementById(`${name}`).innerHTML += ('<div><audio src="' + resolve + '" controls></audio></div>');
@@ -102,10 +102,19 @@ function obtenerBusqueda() {
             return [3, "R"];
         } else if (document.getElementById("G").checked == true) {
             return [3, "G"];
-        } else {
+        } else if (document.getElementById("B").checked == true) {
             return [3, "B"];
         }
 
+    } else if (document.getElementById("inputTamaño2").value != "") {
+        if (document.getElementById("Mayor2").checked == true) {
+            return [4, document.getElementById("inputTamaño2").value, "Mayor"];
+        } else if (document.getElementById("Igual2").checked == true) {
+            return [4, document.getElementById("inputTamaño2").value, "Igual"];
+        } else {
+            return [4, document.getElementById("inputTamaño2").value, "Menor"];
+        }
+        return [4, document.getElementById("inputTamaño2").value];
     } else {
         return -1;
     }
@@ -182,6 +191,32 @@ function requisito(Objeto, busqueda) {
                 }
             }
             return false;
+            break;
+        case 4:
+            valor = parseInt(busqueda[1]);
+            
+            switch (busqueda[2]) {
+                case "Mayor":
+                    if (Objeto.duracion > valor )
+                        return true;
+                    else
+                        return false;
+                    break;
+                case "Igual":
+                    valor = busqueda[1];
+                    if (Objeto.duracion == valor)
+                        return true;
+                    else
+                        return false;
+                    break;
+                case "Menor":
+                    if (Objeto.duracion < valor)
+                        return true;
+                    else
+                        return false;
+                    break;
+            }
+
             break;
     }
 

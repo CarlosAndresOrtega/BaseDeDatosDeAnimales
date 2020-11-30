@@ -2,6 +2,7 @@ var selectedFile;
 var selectedFile2;
 var alto;
 var ancho;
+var duraccion;
 
 var config={
   apiKey: "AIzaSyCtd2LMXOCZyQO1F51Y2x_hK7508gs03HI",
@@ -37,16 +38,19 @@ function save2send(e){
   
   if(validarColor(r,g,b)==true){
     let newAnimal= animalRef.push();
-    newAnimal.set({nombre:nombre,
+    newAnimal.set({
+                  nombre:nombre,
                    especie:especie,
                    genero:genero,
                    audio: audio,
+                   duracion:duraccion,
                    URL:foto,
                    Alto: alto,
                    Ancho: ancho,
                    Rojo:r,
                    Verde:g,
-                   Azul:b});
+                   Azul:b
+                  });
     uploadFile();
     //Reset form
     document.getElementById("formRegister").reset();
@@ -60,6 +64,13 @@ function save2send(e){
     document.getElementById("ColorB").value=""  ;
   }
 }
+
+document.getElementById("prelisten").addEventListener("canplaythrough",(e)=>{
+    duraccion=0;
+    duraccion=e.currentTarget.duration;
+    console.log(duraccion);
+});
+
 document.getElementById("animalFoto").addEventListener("change",function(event){
   selectedFile=event.target.files[0];
   if(selectedFile.length==0 || !(/\.(jpg|png)$/i).test(selectedFile.name)){
@@ -86,25 +97,29 @@ document.getElementById("animalFoto").addEventListener("change",function(event){
 
  
 })
+
 document.getElementById("animalAudio").addEventListener("change",function(event){
-  selectedFile2=event.target.files[0];
-  if(selectedFile2.length==0 || !(/\.(mp3|wav|ogg)$/i).test(selectedFile2.name)){
+  selectedFile2=event.target.files[0]; 
+  if(selectedFile2.length==0 || !(/\.(mp3|wav)$/i).test(selectedFile2.name)){
     alert('Ingrese una imagen con alguno de los siguientes formatos: .mp3/.wav/.ogg.');
     document.getElementById("formRegister").reset();
   }else{
-    // document.getElementById("Dpreview").style.display="block";
+    document.getElementById("Dpreview").style.display="block";
+    
+    var file=document.getElementById("animalAudio").files;
     
     var audio = new Audio();
     audio.src = URL.createObjectURL(selectedFile2);
+    // audio.play();
+
+    if(file.length>0){
+      var fileReader=new FileReader();
+      fileReader.onload=function(event){
+        document.getElementById("prelisten").setAttribute("src",event.target.result);
+      };
+      fileReader.readAsDataURL(file[0]);
+    }
     
-    var file=document.getElementById("animalAudio").files;
-    // if(file.length>0){
-    //   var fileReader=new FileReader();
-    //   fileReader.onload=function(event){
-    //     document.getElementById("preview").setAttribute("src",event.target.result);
-    //   };
-    //   fileReader.readAsDataURL(file[0]);
-    // }
   }
  
 })
