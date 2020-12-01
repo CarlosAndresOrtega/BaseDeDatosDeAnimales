@@ -193,7 +193,7 @@ function requisito(Objeto, busqueda) {
             return false;
             break;
         case 4:
-            valor = parseInt(busqueda[1]);
+            valor = parseFloat(busqueda[1]);
             
             switch (busqueda[2]) {
                 case "Mayor":
@@ -203,8 +203,8 @@ function requisito(Objeto, busqueda) {
                         return false;
                     break;
                 case "Igual":
-                    valor = busqueda[1];
-                    if (Objeto.duracion == valor)
+                    valor = Math.round(busqueda[1]);
+                    if (Math.round(Objeto.duracion) == valor)
                         return true;
                     else
                         return false;
