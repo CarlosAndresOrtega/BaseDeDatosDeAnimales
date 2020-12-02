@@ -16,11 +16,12 @@ var config={
 };
 // Initialize Firebase
 firebase.initializeApp(config);
-//firebase.analytics();
+
 let animalRef=firebase.database().ref("AnimalKingdom");
 
 const btnSub=document.getElementById("Btnsend").addEventListener('click',save2send);
 
+//Funcion para subir todos los datos a la base de datos
 function save2send(e){
   let 
   nombre= document.getElementById("animalName").value,
@@ -101,7 +102,7 @@ document.getElementById("animalFoto").addEventListener("change",function(event){
 document.getElementById("animalAudio").addEventListener("change",function(event){
   selectedFile2=event.target.files[0]; 
   if(selectedFile2.length==0 || !(/\.(mp3|wav)$/i).test(selectedFile2.name)){
-    alert('Ingrese una imagen con alguno de los siguientes formatos: .mp3/.wav/.ogg.');
+    alert('Ingrese una imagen con alguno de los siguientes formatos: .mp3/.wav');
     document.getElementById("formRegister").reset();
   }else{
     document.getElementById("Dpreview").style.display="block";
@@ -123,6 +124,7 @@ document.getElementById("animalAudio").addEventListener("change",function(event)
   }
  
 })
+//Funcion para subir los archivos a la base de datos
 function uploadFile(){
   var filename = selectedFile.name;
   var filename2 = selectedFile2.name;
@@ -155,6 +157,7 @@ function uploadFile(){
   });
   
 }
+//Funcion para la validacion de color
 function validarColor(r,g,b){
   r=parseInt(r,10);
   g=parseInt(g,10);

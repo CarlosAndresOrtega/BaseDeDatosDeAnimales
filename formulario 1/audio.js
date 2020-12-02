@@ -31,6 +31,7 @@ var selectedFile2;
 var storageRef3;
 var uploadTask3;
 
+//Fucnion para buscar el sonido del animal que queremos ingresar
 function busquedaSonido() {
     let animal;
     animal = document.getElementById("inputNombre").value;
@@ -92,8 +93,10 @@ function stopMix(duration, ...media) {
         })
     }, duration, media)
 }
-function iniciar() {
+//Funcion para realizar la Mezcla de los audios
+function iniciar() { 
 
+    //Fragmento de codigo extraido del usuario guest271314, dela plataforma Stack overflow 
     Promise.all(sources.map(get)).then(function (data) {
         var len = Math.max.apply(Math, data.map(function (buffer) {
             return buffer.byteLength
@@ -183,6 +186,7 @@ function iniciar() {
             console.log(e)
         });
 }
+//Funcion para obtener todos los audios mezclados
 function ObtenerAudios() {
 
     document.getElementById("preview").innerHTML="";

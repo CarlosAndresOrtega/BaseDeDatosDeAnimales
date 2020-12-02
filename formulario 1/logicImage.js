@@ -12,7 +12,7 @@ var config = {
 
 firebase.initializeApp(config);
 let animalRef = firebase.database().ref("AnimalKingdom");
-
+//Funcion para descargar los archivos
 function downloadFile() {
     let name;
 
@@ -43,20 +43,9 @@ function downloadFile() {
         alert("No selecciono ningun tipo de busqueda");
     }
 }
-function agregarBase(x) {
-    base_de_datos.push(x);
-}
-function obtenerPosicion(objeto) {
-    for (let i = 0; i < base_de_datos.length; i++) {
 
-        if (objeto.nombre == base_de_datos[i].nombre) {
-            console.log(i, objeto.nombre);
-            return i;
-        }
-    }
-    return -1;
 
-}
+//Funcion para obtener las imagenes y agregarlas al html
 function ObtenerImagen(urlI, name, urlA) {
 
     firebase.storage().ref(`/imagenes/${urlI}`).getDownloadURL().then(resolve => {
@@ -70,6 +59,7 @@ function ObtenerImagen(urlI, name, urlA) {
     });
 
 }
+//Funcion para obtener los audios y agregarla a la imagen que corresponde
 function ObtenerAudio(url, name) {
 
     firebase.storage().ref(`/Audios/${url}`).getDownloadURL().then(resolve => {
@@ -85,6 +75,7 @@ function extraerNombre(url) {
     return url.replace("C:\\fakepath\\", "");
 
 }
+//Funcion para determinar el tipo de busqueda
 function obtenerBusqueda() {
     if (document.getElementById("inputNombre").value != "") {
         return [1, document.getElementById("inputNombre").value];
@@ -119,6 +110,7 @@ function obtenerBusqueda() {
         return -1;
     }
 }
+// Funcion donde realiza el la logica de cada tipo de busqueda 
 function requisito(Objeto, busqueda) {
     switch (busqueda[0]) {
         case 1:
